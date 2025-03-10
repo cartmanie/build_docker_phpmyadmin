@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  phpmyadmin:
+    image: phpmyadmin-jc:latest
+    container_name: phpmyadmin
+    volumes:
+      - ./lighttpd.conf:/etc/lighttpd/lighttpd.conf
+      - ./docker/config.inc.php:/etc/phpmyadmin/config.inc.php
+    restart: always
+    network_mode: bridge  # 使用 host 网络模式
+    ports:
+      - "58000:58000"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"  # 调整日志文件最大大小为10MB
+        max-file: "3"  # 保留3个日志文件轮换
